@@ -57,7 +57,7 @@ export const TIPS: Record<Section, Tip> = {
     points: [
       "Four steps, from a friendly message to outside help. The current one is highlighted and its message is ready to copy.",
       "You send messages yourself. Mark each one as sent and tell us what payroll said, so we know what comes next.",
-      "Check your next paycheck when it arrives: if the money is there, the case closes as recovered.",
+      "The case closes on its own: check your next paycheck, and if the money is there it is marked recovered. Paid by separate check? Tell us with one click.",
     ],
   },
   evidence: {

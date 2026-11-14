@@ -82,7 +82,7 @@ const caseSchema = z.object({
   events: z.array(
     z.object({
       at: z.string(),
-      type: z.enum(["opened", "sent", "promised_fix", "disagreed", "no_response", "recovered", "closed"]),
+      type: z.enum(["opened", "sent", "promised_fix", "disagreed", "no_response", "recovered", "paid_separately", "closed"]),
       step: step.optional(),
       note: z.string().optional(),
     }),

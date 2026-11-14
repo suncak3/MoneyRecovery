@@ -4,10 +4,10 @@ import { expectedForPeriod } from "../check";
 import { formatDate } from "../pay/dates";
 import { sampleRepaymentStub, sampleShortfallStub } from "../sample";
 import { caseFacts } from "./facts";
-import { ladderPosition, markSent, recordOutcome } from "./ladder";
+import { ladderPosition, markPaidSeparately, markSent, recordOutcome } from "./ladder";
 import { messageFor, missingFigures, requiredFragments } from "./templates";
 import { findRepayment } from "./verify";
-import type { RecoveryCase } from "./types";
+import { isVerifiedRecovery, type RecoveryCase } from "./types";
 
 const realNow = new Date("2026-11-14T12:00:00");
 
@@ -124,5 +124,15 @@ describe("rewrite verification", () => {
   it("reports figures that were dropped or changed", () => {
     const rewrite = "For the week of Oct 4, 2026 I worked 45 h. I expected $1,815 but got $1,760.00, so $55.00 is missing.";
     expect(missingFigures(template, rewrite)).toEqual(["$1,815.00", "45.00 h"]);
+  });
+});
+
+describe("repayment outside payroll", () => {
+  it("closes the case as recovered but not verified, and still counts the money", () => {
+    const { state } = openSampleCase();
+    const paid = updateCase(state, state.cases[0].id, (c) => markPaidSeparately(c, realNow));
+    expect(paid.cases[0].status).toBe("recovered");
+    expect(isVerifiedRecovery(paid.cases[0])).toBe(false);
+    expect(homeTotals(paid)).toMatchObject({ recoveredCents: 5500, openCases: 0 });
   });
 });

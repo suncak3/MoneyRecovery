@@ -8,9 +8,17 @@ import { CaseStatusChip } from "@/components/status-chip";
 import { Button, Card, Disclaimer, LinkButton, Loading } from "@/components/ui";
 import { closeCase, skipDemoDays, updateCase } from "@/lib/actions";
 import { caseFacts } from "@/lib/case/facts";
-import { ladderPosition, markSent, recordOutcome, STEP_TITLES, type LadderPosition, type Outcome } from "@/lib/case/ladder";
+import {
+  ladderPosition,
+  markPaidSeparately,
+  markSent,
+  recordOutcome,
+  STEP_TITLES,
+  type LadderPosition,
+  type Outcome,
+} from "@/lib/case/ladder";
 import { messageFor, periodLabel, type CaseFacts, type Message } from "@/lib/case/templates";
-import { isOpen, type CaseEvent, type LadderStep, type RecoveryCase } from "@/lib/case/types";
+import { isOpen, isVerifiedRecovery, type CaseEvent, type LadderStep, type RecoveryCase } from "@/lib/case/types";
 import { expectedForPeriod } from "@/lib/check";
 import { reminderIcs } from "@/lib/ics";
 import { FINDING_TITLES } from "@/lib/pay/causes";
@@ -99,18 +107,17 @@ function CaseView({
           <LinkButton href={`/app/cases/${c.id}/evidence`} variant="secondary">
             Evidence page (print / PDF)
           </LinkButton>
-          {open && (
-            <LinkButton href={`/app/periods/${nextPeriod.id}/check`} variant="secondary" data-guide="next-paycheck">
-              Next paycheck arrived? Check it
-            </LinkButton>
-          )}
         </div>
       </Card>
 
       {c.status === "recovered" ? (
         <div className="rounded-xl bg-accent-soft p-6">
           <p className="text-lg font-semibold text-accent-strong">Recovered: {formatUsd(c.amountCents)} is back in your pocket.</p>
-          <p className="mt-1 text-sm">{c.events.findLast((e) => e.type === "recovered")?.note}</p>
+          <p className="mt-1 text-sm">
+            {isVerifiedRecovery(c)
+              ? c.events.findLast((e) => e.type === "recovered")?.note
+              : "You reported it was paid outside your paycheck, so it wasn't confirmed on a pay stub."}
+          </p>
         </div>
       ) : (
         <Card>
@@ -124,6 +131,28 @@ function CaseView({
               If it&apos;s still not fixed, step {position.next.step} ({STEP_TITLES[position.next.step]}) opens on {formatDate(localIsoDate(position.next.at))}.
             </p>
           )}
+        </Card>
+      )}
+
+      {open && (
+        <Card>
+          <h2 className="font-semibold">How this case closes</h2>
+          <p className="mt-2 text-sm leading-relaxed">
+            You don&apos;t close it by hand. When your next paycheck arrives, check it here. If it includes the missing{" "}
+            {formatUsd(c.amountCents)}, as retro pay or as a higher gross, the case closes as <strong>Recovered</strong> on its own and
+            the money counts as verified.
+          </p>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <LinkButton href={`/app/periods/${nextPeriod.id}/check`} data-guide="next-paycheck">
+              Check my next paycheck
+            </LinkButton>
+            <Button variant="ghost" onClick={() => act((rc) => markPaidSeparately(rc, now))}>
+              I got paid another way
+            </Button>
+          </div>
+          <p className="mt-2 text-xs text-muted">
+            Use &ldquo;I got paid another way&rdquo; for a separate check or transfer that won&apos;t show up on a pay stub.
+          </p>
         </Card>
       )}
 
@@ -340,7 +369,8 @@ const EVENT_LABELS: Record<CaseEvent["type"], string> = {
   promised_fix: "Payroll said they'll fix it",
   disagreed: "Payroll disagreed",
   no_response: "No response yet",
-  recovered: "Money recovered",
+  recovered: "Money recovered, confirmed on a paycheck",
+  paid_separately: "Money recovered, paid separately",
   closed: "Case closed",
 };
 

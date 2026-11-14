@@ -11,7 +11,15 @@ export type CaseStatus =
   | "escalated"
   | "closed_unresolved";
 
-export type CaseEventType = "opened" | "sent" | "promised_fix" | "disagreed" | "no_response" | "recovered" | "closed";
+export type CaseEventType =
+  | "opened"
+  | "sent"
+  | "promised_fix"
+  | "disagreed"
+  | "no_response"
+  | "recovered"
+  | "paid_separately"
+  | "closed";
 
 export type CaseEvent = {
   /** ISO timestamp on the app clock (real time plus any demo offset). */
@@ -35,3 +43,7 @@ export type RecoveryCase = {
 export const CLOSED_STATUSES: ReadonlySet<CaseStatus> = new Set(["recovered", "closed_unresolved"]);
 
 export const isOpen = (c: RecoveryCase) => !CLOSED_STATUSES.has(c.status);
+
+/** True when the repayment was found on a checked paycheck, false when the user reported it. */
+export const isVerifiedRecovery = (c: RecoveryCase) =>
+  c.status === "recovered" && c.events.some((e) => e.type === "recovered");

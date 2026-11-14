@@ -113,6 +113,15 @@ export function markRecovered(c: RecoveryCase, now: Date, note: string): Recover
   return withEvent(c, { at: now.toISOString(), type: "recovered", note }, { status: "recovered" });
 }
 
+/** Repaid outside payroll (a separate check or transfer), so no paycheck will ever show it. */
+export function markPaidSeparately(c: RecoveryCase, now: Date): RecoveryCase {
+  return withEvent(
+    c,
+    { at: now.toISOString(), type: "paid_separately", note: "You reported the money was paid outside your paycheck." },
+    { status: "recovered" },
+  );
+}
+
 export function closeUnresolved(c: RecoveryCase, now: Date): RecoveryCase {
   return withEvent(c, { at: now.toISOString(), type: "closed" }, { status: "closed_unresolved" });
 }
