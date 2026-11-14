@@ -175,3 +175,14 @@ export function messageFor(step: LadderStep, facts: CaseFacts): Message {
 export function requiredFragments(facts: CaseFacts): string[] {
   return [formatUsd(facts.amountCents), formatDate(facts.periodStart), formatDate(facts.periodEnd)];
 }
+
+const FIGURE_PATTERNS = [/\$[\d,]+\.\d{2}/g, /\b[A-Z][a-z]{2} \d{1,2}, \d{4}\b/g, /\b\d+\.\d{2} h\b/g];
+
+/**
+ * Every dollar amount, date and hour figure in the template that a rewrite dropped or changed.
+ * A rewritten message is only used when this list is empty.
+ */
+export function missingFigures(template: string, rewritten: string): string[] {
+  const figures = new Set(FIGURE_PATTERNS.flatMap((pattern) => template.match(pattern) ?? []));
+  return [...figures].filter((figure) => !rewritten.includes(figure));
+}

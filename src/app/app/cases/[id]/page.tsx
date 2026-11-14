@@ -250,7 +250,7 @@ function StepPanel({
       const json = (await response.json()) as { subject?: string; body?: string; source?: "ai" | "template"; error?: string };
       if (!response.ok || !json.body || !json.subject) throw new Error(json.error ?? "unavailable");
       setDraft({ subject: json.subject, body: json.body, source: json.source ?? "template" });
-      setPolishing(json.source === "ai" ? null : "The reworded version dropped a number, so we kept the original.");
+      setPolishing(json.source === "ai" ? null : "We kept the original wording so every number stays exact.");
     } catch {
       setPolishing("Rewording isn't available right now. The message below is ready to send as is.");
     }

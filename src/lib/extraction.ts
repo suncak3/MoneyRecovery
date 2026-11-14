@@ -2,7 +2,7 @@ import { z } from "zod";
 import { emptyStubForm, type StubForm } from "./stub-form";
 
 /** What /api/extract-stub returns: plain numbers as printed on the stub, null when not found. */
-const amount = z.number().nonnegative().nullable();
+const amount = z.number().nullable();
 
 export const extractedStubSchema = z.object({
   regHours: amount,
@@ -11,7 +11,7 @@ export const extractedStubSchema = z.object({
   otPay: amount,
   adjustment: amount,
   gross: amount,
-  preTax: z.array(z.object({ name: z.string(), amount: z.number().nonnegative(), reducesFica: z.boolean() })),
+  preTax: z.array(z.object({ name: z.string(), amount: z.number(), reducesFica: z.boolean() })),
   ss: amount,
   medicare: amount,
   fedTax: amount,

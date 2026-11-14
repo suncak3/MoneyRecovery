@@ -5,7 +5,7 @@ import { formatDate } from "../pay/dates";
 import { sampleRepaymentStub, sampleShortfallStub } from "../sample";
 import { caseFacts } from "./facts";
 import { ladderPosition, markSent, recordOutcome } from "./ladder";
-import { messageFor, requiredFragments } from "./templates";
+import { messageFor, missingFigures, requiredFragments } from "./templates";
 import { findRepayment } from "./verify";
 import type { RecoveryCase } from "./types";
 
@@ -110,5 +110,19 @@ describe("sample persona, end to end", () => {
     expect(repaymentAudit.findings.map((f) => f.code)).toContain("REPAYMENT_RECEIVED");
     expect(state.cases[0].status).toBe("recovered");
     expect(homeTotals(state)).toEqual({ recoveredCents: 5500, openCases: 0, verifiedPaychecks: 1 });
+  });
+});
+
+describe("rewrite verification", () => {
+  const template = "Week of Oct 4, 2026: 45.00 h. Expected $1,815.00, paid $1,760.00, difference $55.00.";
+
+  it("accepts a rewrite that keeps every figure", () => {
+    const rewrite = "For the week of Oct 4, 2026 I worked 45.00 h. I expected $1,815.00 but got $1,760.00, so $55.00 is missing.";
+    expect(missingFigures(template, rewrite)).toEqual([]);
+  });
+
+  it("reports figures that were dropped or changed", () => {
+    const rewrite = "For the week of Oct 4, 2026 I worked 45 h. I expected $1,815 but got $1,760.00, so $55.00 is missing.";
+    expect(missingFigures(template, rewrite)).toEqual(["$1,815.00", "45.00 h"]);
   });
 });
