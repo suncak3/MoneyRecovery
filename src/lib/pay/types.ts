@@ -39,23 +39,26 @@ export type Stub = {
   netCents: number;
 };
 
-export type FindingCode =
-  | "MATCH"
-  | "HOURS_SHORT"
-  | "OT_AVERAGED_WEEKS"
-  | "OT_STRAIGHT_TIME"
-  | "OT_HOURS_SHORT"
-  | "OT_RATE_LOW"
-  | "RATE_MISMATCH"
-  | "UNEXPLAINED_SHORTFALL"
-  | "OVERPAID"
-  | "FICA_SS_MISMATCH"
-  | "FICA_MEDICARE_MISMATCH"
-  | "NET_ARITHMETIC"
-  | "DEDUCTION_NEW"
-  | "DEDUCTION_INCREASED"
-  | "REPAYMENT_RECEIVED"
-  | "ADJUSTMENT_UNMATCHED";
+export const FINDING_CODES = [
+  "MATCH",
+  "HOURS_SHORT",
+  "OT_AVERAGED_WEEKS",
+  "OT_STRAIGHT_TIME",
+  "OT_HOURS_SHORT",
+  "OT_RATE_LOW",
+  "RATE_MISMATCH",
+  "UNEXPLAINED_SHORTFALL",
+  "OVERPAID",
+  "FICA_SS_MISMATCH",
+  "FICA_MEDICARE_MISMATCH",
+  "NET_ARITHMETIC",
+  "DEDUCTION_NEW",
+  "DEDUCTION_INCREASED",
+  "REPAYMENT_RECEIVED",
+  "ADJUSTMENT_UNMATCHED",
+] as const;
+
+export type FindingCode = (typeof FINDING_CODES)[number];
 
 export type Finding = {
   code: FindingCode;
