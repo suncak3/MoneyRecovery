@@ -42,3 +42,10 @@ export function splitByWorkweek(shift: Shift, weekStartsOn: Weekday): WeekSegmen
     { weekStart: toIsoDate(firstWeek + 7), minutes: paid - firstPaid },
   ];
 }
+
+/** Paid minutes per calendar day, attributing each shift to the day it starts on. */
+export function minutesByDay(shifts: Shift[]): Map<string, number> {
+  const byDay = new Map<string, number>();
+  for (const shift of shifts) byDay.set(shift.date, (byDay.get(shift.date) ?? 0) + shiftMinutes(shift));
+  return byDay;
+}

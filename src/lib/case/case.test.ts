@@ -92,7 +92,9 @@ describe("templates", () => {
 
 describe("sample persona, end to end", () => {
   it("finds $55.00, walks the ladder with the demo clock, and is recovered by the next paycheck", () => {
-    let { state, repaymentPeriodId } = openSampleCase();
+    const opened = openSampleCase();
+    const { repaymentPeriodId } = opened;
+    let { state } = opened;
     const caseId = state.cases[0].id;
     expect(state.cases[0].amountCents).toBe(5500);
     expect(state.caseCredits).toBe(0);
