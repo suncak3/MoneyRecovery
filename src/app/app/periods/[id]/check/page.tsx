@@ -118,7 +118,9 @@ function CheckForm({ state, settings, period, now }: { state: AppState; settings
           </Card>
 
           <div className="flex flex-wrap items-center gap-3">
-            <Button type="submit">Run the check</Button>
+            <Button type="submit" data-guide="run-check">
+              Run the check
+            </Button>
             {showErrors && !parsed.stub && <span className="text-sm text-alert">Fix the highlighted fields first.</span>}
           </div>
         </form>

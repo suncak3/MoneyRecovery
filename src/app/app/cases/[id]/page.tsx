@@ -100,7 +100,7 @@ function CaseView({
             Evidence page (print / PDF)
           </LinkButton>
           {open && (
-            <LinkButton href={`/app/periods/${nextPeriod.id}/check`} variant="secondary">
+            <LinkButton href={`/app/periods/${nextPeriod.id}/check`} variant="secondary" data-guide="next-paycheck">
               Next paycheck arrived? Check it
             </LinkButton>
           )}
@@ -170,7 +170,12 @@ function DemoClock({ offsetDays }: { offsetDays: number }) {
   return (
     <div className="flex items-center gap-2 rounded-lg border border-dashed border-warn/60 px-2 py-1 text-xs text-warn">
       <span>Demo control{offsetDays > 0 && ` · clock +${offsetDays} days`}</span>
-      <button type="button" className="font-semibold underline underline-offset-2" onClick={() => setState((s) => skipDemoDays(s, 7))}>
+      <button
+        type="button"
+        data-guide="skip-days"
+        className="rounded font-semibold underline underline-offset-2"
+        onClick={() => setState((s) => skipDemoDays(s, 7))}
+      >
         Demo: skip ahead 7 days
       </button>
     </div>
@@ -298,7 +303,7 @@ function StepPanel({
           </Button>
         )}
         {open && isCurrent && !isSent && (
-          <Button variant="secondary" onClick={onSent}>
+          <Button variant="secondary" onClick={onSent} data-guide="mark-sent">
             {step === 4 ? "I filed a complaint" : "Mark as sent"}
           </Button>
         )}

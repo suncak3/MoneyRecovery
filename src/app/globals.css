@@ -38,6 +38,29 @@ body {
   outline-offset: 2px;
 }
 
+/* The control the sample tour points at. */
+[data-guide-active] {
+  position: relative;
+  z-index: 1;
+  animation: guide-pulse 1.6s ease-out infinite;
+}
+
+@keyframes guide-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(15 107 82 / 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 12px rgb(15 107 82 / 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-guide-active] {
+    animation: none;
+    box-shadow: 0 0 0 3px var(--color-accent);
+  }
+}
+
 @media print {
   html,
   body {

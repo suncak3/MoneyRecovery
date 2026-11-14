@@ -84,7 +84,9 @@ export default function HomePage() {
                 Your log says it should be <strong className="tabular text-ink">{formatUsd(nextToCheck.expected.grossCents)}</strong> gross. Compare it with your stub.
               </p>
             </div>
-            <LinkButton href={`/app/periods/${nextToCheck.period.id}/check`}>Check my paycheck</LinkButton>
+            <LinkButton href={`/app/periods/${nextToCheck.period.id}/check`} data-guide="check-paycheck">
+              Check my paycheck
+            </LinkButton>
           </div>
         </Card>
       )}

@@ -101,6 +101,9 @@ export const appStateSchema = z.object({
   caseCredits: z.number().int().nonnegative(),
   demoClockOffsetDays: z.number().int().nonnegative(),
   sample: z.object({ shortfallPeriodId: isoDate, repaymentPeriodId: isoDate }).nullable(),
+  /** Onboarding: the sample tour can be hidden, and each screen's intro shows once. */
+  guideDismissed: z.boolean().default(false),
+  seenTips: z.array(z.string()).default([]),
 });
 
 export const STORAGE_KEY = "moneyrecover:v1";
@@ -120,6 +123,8 @@ export function emptyState(): AppState {
     caseCredits: 0,
     demoClockOffsetDays: 0,
     sample: null,
+    guideDismissed: false,
+    seenTips: [],
   };
 }
 

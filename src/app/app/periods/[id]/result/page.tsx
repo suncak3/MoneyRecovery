@@ -88,7 +88,9 @@ export default function ResultPage() {
               {existingCase ? (
                 <LinkButton href={`/app/cases/${existingCase.id}`}>Open your recovery case</LinkButton>
               ) : (
-                <Button onClick={startRecovery}>Start a Recovery Case</Button>
+                <Button onClick={startRecovery} data-guide="start-case">
+                  Start a Recovery Case
+                </Button>
               )}
               <span className="text-sm text-muted">Most payroll errors are honest mistakes. We&apos;ll help you ask, step by step.</span>
             </div>

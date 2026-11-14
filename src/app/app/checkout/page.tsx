@@ -91,7 +91,7 @@ function Checkout() {
         <p className="mt-1 text-sm text-muted">
           This hackathon build has no real payments. The button below unlocks the plan you picked so you can try the full recovery flow.
         </p>
-        <Button className="mt-4" onClick={unlock}>
+        <Button className="mt-4" onClick={unlock} data-guide="unlock">
           Unlock {plan === "case" ? "this case" : "Protection"} (demo)
         </Button>
       </Card>
