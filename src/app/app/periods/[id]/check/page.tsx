@@ -7,7 +7,7 @@ import { StubUpload } from "@/components/stub-upload";
 import { Button, Card, Field, inputClass, Loading, PageTitle } from "@/components/ui";
 import { submitStub } from "@/lib/actions";
 import { checkPaycheck, expectedForPeriod } from "@/lib/check";
-import { formatDate } from "@/lib/pay/dates";
+import { formatDate, localIsoDate } from "@/lib/pay/dates";
 import { formatUsd } from "@/lib/pay/money";
 import { periodContaining, type PayPeriod } from "@/lib/pay/periods";
 import type { Settings } from "@/lib/pay/types";
@@ -71,6 +71,12 @@ function CheckForm({ state, settings, period, now }: { state: AppState; settings
   return (
     <>
       <PageTitle title="Check your paycheck" subtitle={`Pay period ${formatDate(period.start)} – ${formatDate(period.end)}`} />
+      {period.end >= localIsoDate(now) && (
+        <p className="mb-6 rounded-lg bg-warn-soft p-3 text-sm text-warn">
+          This pay period ends {formatDate(period.end)}. We&apos;ll compare your stub with the shifts you&apos;ve logged so far, so add any
+          missing ones first.
+        </p>
+      )}
 
       <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
         <form onSubmit={submit} noValidate className="flex flex-col gap-6">

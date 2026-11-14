@@ -96,7 +96,7 @@ export default function HomePage() {
           summary={current}
           today={today}
           weekStartsOn={state.settings.weekStartsOn}
-          paycheckHref={paycheckHref(nextToCheck ?? periods.find((p) => p.status !== "in_progress") ?? null)}
+          paycheckHref={paycheckHref(nextToCheck ?? periods.find((p) => p.status !== "in_progress") ?? current)}
         />
       )}
 
@@ -138,8 +138,9 @@ function periodHref(p: PeriodSummary) {
   return `/app/shifts?period=${p.period.id}`;
 }
 
-function paycheckHref(p: PeriodSummary | null) {
-  return p ? `/app/periods/${p.period.id}/check` : null;
+/** The oldest unchecked finished period, else the latest finished one, else the current one. */
+function paycheckHref(p: PeriodSummary) {
+  return `/app/periods/${p.period.id}/check`;
 }
 
 function CurrentPeriod({
@@ -151,7 +152,7 @@ function CurrentPeriod({
   summary: PeriodSummary;
   today: string;
   weekStartsOn: Weekday;
-  paycheckHref: string | null;
+  paycheckHref: string;
 }) {
   const thisWeekStart = toIsoDate(workweekStart(toDayNumber(today), weekStartsOn));
   const week = summary.expected.weeks.find((w) => w.weekStart === thisWeekStart);
@@ -170,11 +171,9 @@ function CurrentPeriod({
       </div>
       <div className="mt-5 flex flex-wrap gap-3">
         <LinkButton href="/app/shifts">Add shift</LinkButton>
-        {paycheckHref && (
-          <LinkButton href={paycheckHref} variant="secondary">
-            My paycheck arrived
-          </LinkButton>
-        )}
+        <LinkButton href={paycheckHref} variant="secondary">
+          My paycheck arrived
+        </LinkButton>
       </div>
     </Card>
   );

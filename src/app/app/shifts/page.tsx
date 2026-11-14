@@ -74,6 +74,7 @@ function PeriodShifts({ state, settings, period, today }: { state: AppState; set
               key={editing?.id ?? "new"}
               initial={editing}
               defaultDate={defaultDate}
+              today={today}
               onSave={(shift) => {
                 setState((s) => upsertShift(s, shift));
                 setEditing(null);
@@ -137,11 +138,9 @@ function PeriodShifts({ state, settings, period, today }: { state: AppState; set
             <h2 className="mb-4 font-semibold">Hours by workweek</h2>
             <WeekChart expected={expected} shifts={shifts} />
           </Card>
-          {period.end < today && (
-            <Link href={`/app/periods/${period.id}/check`} className="text-sm font-medium text-accent hover:underline">
-              This period is over. Check the paycheck for it →
-            </Link>
-          )}
+          <Link href={`/app/periods/${period.id}/check`} className="text-sm font-medium text-accent hover:underline">
+            {period.end < today ? "This period is over. Check the paycheck for it →" : "Already have the pay stub for this period? Check it →"}
+          </Link>
         </div>
       </div>
     </>
@@ -151,11 +150,13 @@ function PeriodShifts({ state, settings, period, today }: { state: AppState; set
 function ShiftForm({
   initial,
   defaultDate,
+  today,
   onSave,
   onCancel,
 }: {
   initial: Shift | null;
   defaultDate: string;
+  today: string;
   onSave: (shift: Shift) => void;
   onCancel?: () => void;
 }) {
@@ -179,7 +180,7 @@ function ShiftForm({
   return (
     <form onSubmit={submit} className="grid grid-cols-2 gap-4">
       <div className="col-span-2">
-        <Field label="Date" htmlFor="shift-date">
+        <Field label="Date" htmlFor="shift-date" hint={date > today ? "This date is in the future. That's fine for a planned shift." : undefined}>
           <input id="shift-date" type="date" required className={inputClass} value={date} onChange={(e) => setDate(e.target.value)} />
         </Field>
       </div>

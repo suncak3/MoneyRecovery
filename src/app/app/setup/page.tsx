@@ -86,7 +86,7 @@ function SetupForm({ initial, hasChecks, today }: { initial: Settings | null; ha
           <Field
             label="Current pay period started on"
             htmlFor="anchor"
-            hint={aligned && aligned !== anchor ? `Pay periods follow your workweek, so we'll use ${formatDate(aligned)}.` : "Check a recent pay stub for the period dates."}
+            hint={aligned && aligned !== anchor ? `Pay periods follow your workweek, so we'll use ${formatDate(aligned)}.` : "Already have a pay stub? Enter the period start date printed on it."}
           >
             <input id="anchor" type="date" className={inputClass} value={anchor} onChange={(e) => setAnchor(e.target.value)} />
           </Field>
