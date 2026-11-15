@@ -24,6 +24,21 @@ export function LinkButton({
   return <Link className={`${buttonBase} ${variants[variant]} ${className}`} {...props} />;
 }
 
+/** The way back to the parent screen, shown above the page title. */
+export function BackLink({ href, children, className = "" }: { href: string; children: ReactNode; className?: string }) {
+  return (
+    <Link
+      href={href}
+      className={`no-print group inline-flex items-center gap-1.5 text-sm font-medium text-muted hover:text-accent ${className}`}
+    >
+      <span aria-hidden="true" className="transition-transform group-hover:-translate-x-0.5">
+        ←
+      </span>
+      {children}
+    </Link>
+  );
+}
+
 export function Card({ className = "", ...props }: ComponentProps<"section">) {
   return <section className={`rounded-xl border border-line bg-surface p-5 sm:p-6 ${className}`} {...props} />;
 }

@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import { NeedsSetup } from "@/components/needs-setup";
 import { PayBreakdown } from "@/components/pay-breakdown";
-import { Button, Card, Disclaimer, Loading } from "@/components/ui";
+import { BackLink, Button, Card, Disclaimer, Loading } from "@/components/ui";
 import { WeekChart } from "@/components/week-chart";
 import { expectedForPeriod } from "@/lib/check";
 import { totalDeductions } from "@/lib/pay/audit";
@@ -47,9 +46,7 @@ export default function EvidencePage() {
   return (
     <div className="flex flex-col gap-6">
       <div className="no-print flex flex-wrap items-center justify-between gap-3">
-        <Link href={`/app/cases/${c.id}`} className="text-sm text-muted hover:text-accent">
-          ← Back to the case
-        </Link>
+        <BackLink href={`/app/cases/${c.id}`}>Back to the case</BackLink>
         <Button onClick={() => window.print()}>Print or save as PDF</Button>
       </div>
 

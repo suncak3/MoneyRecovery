@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
-import { Button, Card, Loading, PageTitle } from "@/components/ui";
+import { BackLink, Button, Card, Loading, PageTitle } from "@/components/ui";
 import { buyPlan, startCase } from "@/lib/actions";
 import { formatUsd } from "@/lib/pay/money";
 import { setState, useAppState, useNow } from "@/lib/store";
@@ -55,6 +55,9 @@ function Checkout() {
 
   return (
     <>
+      <BackLink href={audit ? `/app/periods/${periodId}/result` : "/app"} className="mb-4">
+        {audit ? "Back to the result" : "Home"}
+      </BackLink>
       <PageTitle
         title="Get your money back"
         subtitle={

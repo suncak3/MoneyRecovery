@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { NeedsSetup } from "@/components/needs-setup";
 import { StubUpload } from "@/components/stub-upload";
-import { Button, Card, Field, inputClass, Loading, PageTitle } from "@/components/ui";
+import { BackLink, Button, Card, Field, inputClass, Loading, PageTitle } from "@/components/ui";
 import { submitStub } from "@/lib/actions";
 import { checkPaycheck, expectedForPeriod } from "@/lib/check";
 import { formatDate, localIsoDate } from "@/lib/pay/dates";
@@ -70,6 +70,15 @@ function CheckForm({ state, settings, period, now }: { state: AppState; settings
 
   return (
     <>
+      {state.audits.some((a) => a.periodId === period.id) ? (
+        <BackLink href={`/app/periods/${period.id}/result`} className="mb-4">
+          Back to the result
+        </BackLink>
+      ) : (
+        <BackLink href="/app" className="mb-4">
+          Home
+        </BackLink>
+      )}
       <PageTitle title="Check your paycheck" subtitle={`Pay period ${formatDate(period.start)} – ${formatDate(period.end)}`} />
       {period.end >= localIsoDate(now) && (
         <p className="mb-6 rounded-lg bg-warn-soft p-3 text-sm text-warn">

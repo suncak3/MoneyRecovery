@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { NeedsSetup } from "@/components/needs-setup";
 import { PayBreakdown } from "@/components/pay-breakdown";
-import { Button, Card, Disclaimer, LinkButton, Loading } from "@/components/ui";
+import { BackLink, Button, Card, Disclaimer, LinkButton, Loading } from "@/components/ui";
 import { WeekChart } from "@/components/week-chart";
 import { canOpenCase, startCase } from "@/lib/actions";
 import { expectedForPeriod } from "@/lib/check";
@@ -56,11 +56,11 @@ export default function ResultPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="text-sm text-muted">
-        <Link href="/app" className="hover:text-accent">
-          Home
-        </Link>{" "}
-        / Pay period {formatDate(period.start)} – {formatDate(period.end)}
+      <div className="flex flex-wrap items-baseline gap-x-2 text-sm text-muted">
+        <BackLink href="/app">Home</BackLink>
+        <span>
+          · Pay period {formatDate(period.start)} – {formatDate(period.end)}
+        </span>
       </div>
 
       <VerdictBanner audit={audit} />

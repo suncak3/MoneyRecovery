@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { NeedsSetup } from "@/components/needs-setup";
 import { CaseStatusChip } from "@/components/status-chip";
-import { Button, Card, Disclaimer, LinkButton, Loading } from "@/components/ui";
+import { BackLink, Button, Card, Disclaimer, LinkButton, Loading } from "@/components/ui";
 import { closeCase, skipDemoDays, updateCase } from "@/lib/actions";
 import { caseFacts } from "@/lib/case/facts";
 import {
@@ -87,11 +86,9 @@ function CaseView({
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="text-sm text-muted">
-        <Link href="/app" className="hover:text-accent">
-          Home
-        </Link>{" "}
-        / Recovery case
+      <div className="flex flex-wrap items-baseline gap-x-2 text-sm text-muted">
+        <BackLink href="/app">Home</BackLink>
+        <span>· Recovery case</span>
       </div>
 
       <Card>

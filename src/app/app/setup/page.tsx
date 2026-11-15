@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
-import { Button, Card, Field, inputClass, Loading, PageTitle } from "@/components/ui";
+import { BackLink, Button, Card, Field, inputClass, Loading, PageTitle } from "@/components/ui";
 import { saveSettings } from "@/lib/actions";
 import { formatDate, localIsoDate, WEEKDAY_NAMES, type Weekday } from "@/lib/pay/dates";
 import { formatUsd, parseUsd } from "@/lib/pay/money";
@@ -43,6 +43,9 @@ function SetupForm({ initial, hasChecks, today }: { initial: Settings | null; ha
 
   return (
     <>
+      <BackLink href={initial ? "/app" : "/"} className="mb-4">
+        {initial ? "Home" : "Back"}
+      </BackLink>
       <PageTitle title="Pay setup" subtitle="Four details about how you're paid. Takes under a minute." />
       <Card>
         <form onSubmit={submit} className="grid gap-5 sm:grid-cols-2" noValidate>

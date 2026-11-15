@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState, type FormEvent } from "react";
 import { NeedsSetup } from "@/components/needs-setup";
 import { PayBreakdown } from "@/components/pay-breakdown";
-import { Button, Card, Field, inputClass, Loading, PageTitle } from "@/components/ui";
+import { BackLink, Button, Card, Field, inputClass, Loading, PageTitle } from "@/components/ui";
 import { WeekChart } from "@/components/week-chart";
 import { deleteShift, upsertShift } from "@/lib/actions";
 import { expectedForPeriod } from "@/lib/check";
@@ -51,6 +51,9 @@ function PeriodShifts({ state, settings, period, today }: { state: AppState; set
 
   return (
     <>
+      <BackLink href="/app" className="mb-4">
+        Home
+      </BackLink>
       <PageTitle
         title="Shifts"
         subtitle={`Pay period ${formatDate(period.start)} – ${formatDate(period.end)}`}
