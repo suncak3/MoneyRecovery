@@ -167,7 +167,9 @@ function VerdictBanner({ audit }: { audit: StoredAudit }) {
       <p className={`text-sm font-medium ${audit.verdict === "match" ? "text-accent-strong" : "text-warn"}`}>
         {audit.verdict === "match" ? "Matches your log" : "Gross pay matches, but something is worth a look"}
       </p>
-      <p className="tabular mt-1 text-4xl font-semibold tracking-tight">{gross?.actual != null ? `${formatUsd(gross.actual)} verified` : "Verified"}</p>
+      <p className="tabular mt-1 text-4xl font-semibold tracking-tight">
+        {audit.verdict === "match" ? (gross?.actual != null ? `${formatUsd(gross.actual)} verified` : "Verified") : gross?.actual != null && formatUsd(gross.actual)}
+      </p>
       <p className="mt-2 text-sm">
         {audit.verdict === "match" ? "Nice. This paycheck counts toward your verified paychecks." : "See the details below."}
       </p>

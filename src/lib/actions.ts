@@ -57,11 +57,14 @@ export function refreshAudits(state: AppState): AppState {
 
 export function submitStub(state: AppState, stub: Stub, now: Date): AppState {
   if (!state.settings) throw new Error("Set up your pay first");
-  const { audit, repayment } = checkPaycheck({ ...state, settings: state.settings }, stub);
+  // Re-checking a paycheck that already repaid a case: that case is closed now, so let it match again.
+  const earlier = state.audits.find((a) => a.periodId === stub.periodId)?.repayment;
+  const matchable = state.cases.map((c) => (c.id === earlier?.caseId ? { ...c, status: "awaiting_response" as const } : c));
+  const { audit, repayment } = checkPaycheck({ ...state, settings: state.settings, cases: matchable }, stub);
   const stored: StoredAudit = { ...audit, checkedAt: now.toISOString(), repayment };
 
   const cases = state.cases.map((c) =>
-    repayment && c.id === repayment.caseId
+    repayment && c.id === repayment.caseId && isOpen(c)
       ? markRecovered(c, now, `${formatUsd(repayment.amountCents)} found on the paycheck for the period starting ${formatDate(stub.periodId)}.`)
       : c,
   );

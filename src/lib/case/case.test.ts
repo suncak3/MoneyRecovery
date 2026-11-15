@@ -110,6 +110,13 @@ describe("sample persona, end to end", () => {
     expect(repaymentAudit.findings.map((f) => f.code)).toContain("REPAYMENT_RECEIVED");
     expect(state.cases[0].status).toBe("recovered");
     expect(homeTotals(state)).toEqual({ recoveredCents: 5500, openCases: 0, verifiedPaychecks: 1 });
+
+    // Checking the same paycheck again keeps the repayment instead of reading it as an overpayment.
+    state = submitStub(state, sampleRepaymentStub(repaymentPeriodId), appNow(state, realNow.getTime()));
+    const recheck = state.audits.find((a) => a.periodId === repaymentPeriodId)!;
+    expect(recheck.verdict).toBe("match");
+    expect(recheck.repayment?.caseId).toBe(caseId);
+    expect(state.cases[0].events.filter((e) => e.type === "recovered")).toHaveLength(1);
   });
 });
 

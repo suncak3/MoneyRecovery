@@ -33,7 +33,7 @@ npm run lint
 npm run typecheck
 ```
 
-Node 20.9+ is required. AI features are optional; copy `.env.example` to `.env.local` and set `LLM_API_KEY` (an Anthropic key) to enable them. Without a key, manual entry and the template messages work as usual.
+Node 20.9+ is required. AI features are optional; create `.env.local` with `LLM_API_KEY=<an Anthropic key>` (and optionally `LLM_MODEL`) to enable them. Without a key, manual entry and the template messages work as usual.
 
 ## Architecture
 
