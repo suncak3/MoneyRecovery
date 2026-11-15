@@ -14,7 +14,7 @@ function stub(grossCents: number, extra: Partial<Stub> = {}): Stub {
 
 const codes = (result: ReturnType<typeof auditPaycheck>) => result.findings.map((f) => f.code);
 
-describe("audit (spec §6.5, cases 13–20)", () => {
+describe("audit (reference cases 13–20)", () => {
   it("13. sample persona: overtime averaged across weeks, $55.00 short, taxes consistent", () => {
     const sample = buildSample("2026-11-14");
     const period = periodStarting(sample.periods.shortfallPeriodId, "biweekly");

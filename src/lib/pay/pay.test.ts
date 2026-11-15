@@ -13,7 +13,7 @@ const pay = (rateCents: number, ...hoursPerWeek: number[]) =>
   );
 const shift = (date: string, start: string, end: string, breakMin = 0) => ({ id: "s", date, start, end, breakMin });
 
-describe("hours and pay (spec §6.5, cases 1–10)", () => {
+describe("hours and pay (reference cases 1–10)", () => {
   it("1. weekly 40.0 h @ $20.00", () => {
     const p = pay(2000, 40);
     expect([p.regMinutes, p.otMinutes, p.grossCents]).toEqual([2400, 0, 80_000]);
