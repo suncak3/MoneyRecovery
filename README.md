@@ -2,7 +2,19 @@
 
 **Log your shifts, know what your paycheck should be, and when it comes up short, get the money back step by step.**
 
-Built for the Zimran Business Cup (24h). Web only, no sign-up: open the app and press **Try with a sample**.
+**Live: [moneyrecovery.vercel.app](https://moneyrecovery.vercel.app/)**. Web only, no sign-up, data stays in your browser. Built for the Zimran Business Cup (24h).
+
+## Try it in two minutes
+
+Open the app and press **Try with a sample**. A guided tour walks through the whole loop with Maria, a warehouse associate paid $22.00/h every two weeks:
+
+1. Maria worked 45 hours one week and 35 the next, so her shifts say **$1,815.00** gross.
+2. **Check the paycheck**: her stub pays 80 hours at the regular rate. The check finds **$55.00 missing**: payroll averaged the two weeks, so 5 overtime hours were paid at $22.00 instead of $33.00.
+3. **Start a Recovery Case** (demo checkout, nothing is charged) and send the friendly first message to payroll.
+4. **Skip 7 days** with the demo clock. The follow-up message becomes current.
+5. **Check her next paycheck**: it carries $55.00 of retro pay, and the case closes itself as **recovered**.
+
+Every number on the way comes from the deterministic pay engine in `src/lib/pay`, not from an LLM.
 
 ## The user and the pain
 
@@ -21,7 +33,7 @@ Shift trackers and paycheck checkers exist. They stop at "you were shorted $55".
 3. **Recovery Case** (paid): a printable evidence page, a four-step message ladder (friendly check → follow-up → formal written request → US Department of Labor complaint guide), outcome tracking, calendar reminders (.ics) for the next step, and automatic verification: when a later paycheck includes the missing amount, the case closes as **recovered**.
 4. **Home** leads with *Recovered so far*, *Open cases* and *Paychecks verified*.
 
-Checking is free. Recovery is **$9 per case** or **$5.99/month** for unlimited cases. Checkout is a clearly labelled demo that never blocks the flow.
+Checking is free. Recovery is **$3.99 per case** or **$5.99/month** for unlimited cases. Checkout is a clearly labelled demo that never blocks the flow.
 
 ## Run it
 
@@ -87,7 +99,7 @@ Regular pay = `round(regMinutes × rate / 60)`, overtime pay = `round(otMinutes 
 
 - The sample shows two finished pay periods: the short one, and the next one, which carries the $55.00 as retro pay, so the whole recovery loop can be tried immediately.
 - "They disagree" moves the case straight to the formal written request, since a friendly follow-up adds little after a "no".
-- The paywall stores a plan (`protection`) or per-case credits instead of a single `unlocked` flag, so $9-per-case is modelled honestly.
+- The paywall stores a plan (`protection`) or per-case credits instead of a single `unlocked` flag, so $3.99-per-case is modelled honestly.
 - Changing the pay schedule clears checked paychecks and cases (their period ids no longer exist); shifts are kept. The setup screen warns first.
 
 ## Where AI is used, and where it isn't

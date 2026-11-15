@@ -48,7 +48,7 @@ export const TIPS: Record<Section, Tip> = {
     title: "Recovery is the paid part",
     points: [
       "Logging shifts and checking paychecks stay free.",
-      "A Recovery Case is $9, or $5.99 a month for unlimited cases.",
+      "A Recovery Case is $3.99, or $5.99 a month for unlimited cases.",
       "This is a demo checkout: nothing is charged.",
     ],
   },

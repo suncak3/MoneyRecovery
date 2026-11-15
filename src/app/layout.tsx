@@ -6,7 +6,7 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: { default: "MoneyRecover — Is your paycheck right?", template: "%s · MoneyRecover" },
+  title: { default: "MoneyRecover - Is your paycheck right?", template: "%s · MoneyRecover" },
   description:
     "Log your shifts, know what your paycheck should be, and when it comes up short, get the money back step by step.",
 };

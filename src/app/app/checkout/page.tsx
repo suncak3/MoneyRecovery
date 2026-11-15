@@ -13,7 +13,7 @@ const PLANS: { id: Plan; name: string; price: string; cadence: string; points: s
   {
     id: "case",
     name: "Recovery",
-    price: "$9",
+    price: "$3.99",
     cadence: "per case",
     points: ["Evidence page you can print or save as PDF", "Four-step message ladder, ready to send", "Tracks the case until the money is back"],
   },

@@ -113,7 +113,7 @@ export default function LandingPage() {
         <section className="border-t border-line py-12">
           <h2 className="font-semibold">Free to check. Pay only to recover.</h2>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
-            Logging shifts and checking paychecks are free. When a paycheck comes up short, a Recovery Case is $9, or $5.99 a month for unlimited
+            Logging shifts and checking paychecks are free. When a paycheck comes up short, a Recovery Case is $3.99, or $5.99 a month for unlimited
             cases with every new paycheck watched for repayment.
           </p>
         </section>
