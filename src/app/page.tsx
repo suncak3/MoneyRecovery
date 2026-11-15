@@ -50,7 +50,7 @@ export default function LandingPage() {
       <main className="mx-auto w-full max-w-5xl flex-1 px-4">
         <section className="py-12 sm:py-20">
           <h1 className="max-w-3xl text-4xl font-semibold tracking-tight sm:text-6xl">
-            Is your paycheck right? Find out — and get back what&apos;s missing.
+            Is your paycheck right? Find out - and get back what&apos;s missing.
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-muted">
             For hourly workers whose schedule changes every week. 43% of US employees had a paycheck error in the past year, and most caught it
